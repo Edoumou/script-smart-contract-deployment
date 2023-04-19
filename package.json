@@ -1,0 +1,14 @@
+{
+  "name": "compile_deploy_smart_contracts",
+  "version": "1.0.0",
+  "description": "testing smart contract compilation and deployment",
+  "main": "script_deploy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Samuel Edoumou",
+  "license": "ISC",
+  "dependencies": {
+    "web3": "^1.9.0"
+  }
+}
