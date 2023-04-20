@@ -1,5 +1,4 @@
 //import Web3 from "web3";
-const { json } = require('stream/consumers');
 const Web3 = require('web3');
 const Test = require("./abi/Test.json");
 const web3 = new Web3('http://localhost:7545');
@@ -22,10 +21,11 @@ getWeb3 = async () => {
     let gasPrice = await web3.eth.getGasPrice();
 
     console.log('===========================================================================');
-    await contract.deploy(
+    
+    let receipt = await contract.deploy(
         {
-            data: '0x0' + bytecode,
-            arguments: [12, 'Ana']
+            data: '0x' + bytecode,
+            arguments: [10, 'Beni']
         }
     ).send({
         from: account,
@@ -43,6 +43,37 @@ getWeb3 = async () => {
     });
 
     console.log('contract address:', contractAddress);
+    
+
+    let newABI = receipt._jsonInterface;
+
+    // create an instance of the deployed contract
+    let newContract = await new web3.eth.Contract(
+        newABI, contractAddress,
+        {
+            from: account
+        }
+    );
+
+    // interact with the deployed contract
+    let name = await newContract.methods.name().call({ from: account });
+    let age = await newContract.methods.age().call({ from: account });
+
+    console.log('')
+    console.log('name:', name);
+    console.log('age:', age);
+
+    // change name and age
+    await newContract.methods.setName('Sam').send({ from:account });
+    await newContract.methods.setAge('15').send({ from:account });
+
+    name = await newContract.methods.name().call({ from: account });
+    age = await newContract.methods.age().call({ from: account });
+
+    console.log('')
+    console.log('name:', name);
+    console.log('age:', age);
+
     console.log('===========================================================================');
 }
 
