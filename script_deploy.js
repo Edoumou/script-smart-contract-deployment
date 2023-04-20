@@ -12,7 +12,7 @@ getWeb3 = async () => {
     //let bytecode = web3.utils.toHex(Test.contracts['contracts/Test.sol:Test'].bin);
     let bytecode = Test.contracts['contracts/Test.sol:Test'].bin;
 
-    // create a instance of the contract
+    // create an instance of the contract
     let contract = await new web3.eth.Contract(abi);
 
     // deploy the contract
